@@ -8,19 +8,39 @@ Seperating the concerns via WebComponents.
 
 ## UI
 
+This is actually language agnostic and could use anything that can create a webcomponent!
+
 ```elm
+-- A Translation function that just implements a custom html node where the webcomponent will be attatched
+trans : String -> Element msg
+trans key =
+    html
+        (Html.node "x-trans"
+            [ Html.Attributes.attribute
+                "trans-key"
+                key
+            ]
+            []
+        )
+
 view : Model -> Html Msg
 view _ =
     root
         (column
             []
-            [ buttonWith (trans "HTuFzfsQpom58JYmLZeWo") NoOp
+            [
+            -- A translation is implemented by the coder via a random generated key
+            -- The copy team can then add the translations as an overlay 
+               buttonWith (trans "HTuFzfsQpom58JYmLZeWo") NoOp
+            -- We could generate this key with a simple editor-plug-in
             , buttonWith (trans "Mlvc0CGpoEUsVSNml20dA") NoOp
             ]
         )
 ```
 
 ## Trans module
+
+The translations web-component (again, could be anything!) just handles some keys passed down.
 
 ```ts
 const trans = new Map()
@@ -38,4 +58,9 @@ class Trans extends HTMLElement {
 
 customElements.define("x-trans", Trans)
 ```
+
+## Edit mode
+
+To edit the user interface copy there could be an overlay application that attatches itself to every `x-trans` component and writes the edits to a database.
+
 

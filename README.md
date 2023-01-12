@@ -2,6 +2,10 @@
 
 A sketch of an idea.
 
+# Problem
+
+The developer should not be concerned with the copy and translations of the UI they are developing, especially for larger bodys of copy text.
+
 # Idea
 
 Seperating the concerns via WebComponents.

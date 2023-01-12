@@ -1,9 +1,9 @@
 port module Main exposing (..)
 
 import Browser
-import Element exposing (el, fill, height, px, scrollbars, width)
-import Element.Background
+import Element exposing (Element, column, html)
 import Html exposing (Html)
+import Html.Attributes
 import UI exposing (..)
 
 
@@ -58,11 +58,15 @@ type Msg
     | Decrement
     | SendMessage
     | GotMessage String
+    | NoOp
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
+        NoOp ->
+            ( model, Cmd.none )
+
         Increment ->
             ( { model | counter = model.counter + 1 }, Cmd.none )
 
@@ -76,24 +80,24 @@ update msg model =
             ( { model | messages = m :: model.messages }, Cmd.none )
 
 
+trans : String -> Element msg
+trans key =
+    html
+        (Html.node "x-trans"
+            [ Html.Attributes.attribute
+                "trans-key"
+                key
+            ]
+            []
+        )
+
+
 view : Model -> Html Msg
-view model =
+view _ =
     root
-        (col center
-            [ row
-                [ button "-" Decrement
-                , el [ Element.centerX ] <| text (String.fromInt model.counter)
-                , button "+" Increment
-                ]
-            , col []
-                [ button "Send Message" SendMessage
-                , col
-                    [ height (px 100)
-                    , scrollbars
-                    , width fill
-                    , Element.Background.color colors.shade1
-                    ]
-                    (List.map text model.messages)
-                ]
+        (column
+            []
+            [ buttonWith (trans "HTuFzfsQpom58JYmLZeWo") NoOp
+            , buttonWith (trans "Mlvc0CGpoEUsVSNml20dA") NoOp
             ]
         )

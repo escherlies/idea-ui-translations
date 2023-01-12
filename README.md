@@ -1,48 +1,41 @@
-# Elm-Embed-Boilerplate
+# Translations
 
-Simple boilerplate to develop widgets or components with Elm using web components.
+A sketch of an idea.
 
-## About
+# Idea
 
-For developing standalone widgets or components in Elm. They will have their own state and runtime so you can use them multiple times.
+Seperating the concerns via WebComponents.
 
-## Config
+## UI
 
-Whats included?
-
-### [Elm](https://elm-lang.org/)  
-
-Because writing declarative, purely functional web apps is fun!
-
-### [Elm-UI](https://package.elm-lang.org/packages/mdgriffith/elm-ui/latest/)
-
-Because no one wants to write CSS!
-
-### [Parcel](https://parceljs.org/)
-
-Because it just works right out-of-the-box.
-
-## Example usage
-
-Import the script and use the custom component.
-
-```html
-<!DOCTYPE html>
-
-<head>
-  <!-- ... -->
-  <script src="widget-path/index.js"></script>
-  <!-- ... -->
-</head>
-
-<body>
-  <!-- ... -->
-  <elm-counter />
-  <elm-counter />
-  <!-- ... -->
-</body>
+```elm
+view : Model -> Html Msg
+view _ =
+    root
+        (column
+            []
+            [ buttonWith (trans "HTuFzfsQpom58JYmLZeWo") NoOp
+            , buttonWith (trans "Mlvc0CGpoEUsVSNml20dA") NoOp
+            ]
+        )
 ```
 
-## Todo
+## Trans module
 
-- [ ] Add component interop via flags and ports (advanced use)
+```ts
+const trans = new Map()
+
+trans.set("HTuFzfsQpom58JYmLZeWo", "Hello, World!")
+trans.set("Mlvc0CGpoEUsVSNml20dA", "Very, nice!")
+
+
+class Trans extends HTMLElement {
+  constructor() {
+    super()
+    this.innerText = trans.get(this.getAttribute("trans-key"))
+  }
+}
+
+customElements.define("x-trans", Trans)
+```
+

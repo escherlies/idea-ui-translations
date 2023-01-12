@@ -10,12 +10,6 @@ class Trans extends HTMLElement {
     super()
     this.innerText = trans.get(this.getAttribute("trans-key"))
   }
-
-  onchange = () => {
-    this.innerText = trans.get(this.getAttribute("trans-key"))
-  }
-
-
 }
 
 customElements.define("x-trans", Trans)

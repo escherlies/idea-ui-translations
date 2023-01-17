@@ -1,3 +1,3 @@
 import "./init-elm"
-import "./trans"
+import "./trans-v1"
 import "./trans-v2"

@@ -7,17 +7,11 @@ trans.set("Mlvc0CGpoEUsVSNml20dA", "Very, nice!")
 /**
  * Translation WebComponent
  * 
- * 
- * Use shadow doom, see https://stackblitz.com/edit/customelements?file=app.js
- *                  and https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM
- * 
  */
 class Trans extends HTMLElement {
-  shadowDOM: ShadowRoot
 
   constructor() {
     super()
-    this.shadowDOM = this.attachShadow({ mode: "open" })
   }
 
   connectedCallback() {
@@ -25,7 +19,7 @@ class Trans extends HTMLElement {
   }
 
   setContent(content: string) {
-    this.shadowDOM.textContent = content
+    this.textContent = content
   }
 }
 

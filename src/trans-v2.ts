@@ -65,17 +65,11 @@ const getRandomId = () => {
 /**
  * Translation WebComponent
  * 
- * 
- * Use shadow doom, see https://stackblitz.com/edit/customelements?file=app.js
- *                  and https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM
- * 
  */
 class TransV2 extends HTMLElement {
-  shadowDOM: ShadowRoot
 
   constructor() {
     super()
-    this.shadowDOM = this.attachShadow({ mode: "open" })
   }
 
   connectedCallback() {
@@ -97,7 +91,7 @@ class TransV2 extends HTMLElement {
   }
 
   setContent(content: string) {
-    this.shadowDOM.textContent = content
+    this.textContent = content
   }
 }
 

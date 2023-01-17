@@ -7,7 +7,6 @@ trans.set("Mlvc0CGpoEUsVSNml20dA", "Very, nice!")
 /**
  * Translation WebComponent
  * 
- * Parcel v1 
  * 
  * Use shadow doom, see https://stackblitz.com/edit/customelements?file=app.js
  *                  and https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM

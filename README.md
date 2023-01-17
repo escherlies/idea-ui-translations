@@ -146,3 +146,6 @@ function hash(a: string): string {
 To edit the user interface copy there could be an overlay application that attatches itself to every `x-trans` component and writes the edits to a database.
 
 
+# Performance
+
+_To be tested_

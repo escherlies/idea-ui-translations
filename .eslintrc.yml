@@ -31,5 +31,3 @@ rules:
     - error
   eol-last:
     - error
-  no-console:
-    - warn

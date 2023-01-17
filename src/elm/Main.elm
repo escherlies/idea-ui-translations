@@ -1,9 +1,10 @@
 port module Main exposing (..)
 
 import Browser
-import Element exposing (Element, column, html)
+import Element exposing (Element, column, html, padding, paragraph, spacing)
 import Html exposing (Html)
 import Html.Attributes
+import Json.Encode
 import UI exposing (..)
 
 
@@ -104,11 +105,22 @@ transV2 description =
         )
 
 
+transInterpolated : String -> List String -> Element msg
+transInterpolated description variables =
+    html
+        (Html.node "x-trans-v2"
+            [ Html.Attributes.attribute "trans-desc" description
+            , Html.Attributes.attribute "trans-vars" (Json.Encode.list Json.Encode.string variables |> Json.Encode.encode 0)
+            ]
+            []
+        )
+
+
 view : Model -> Html Msg
 view _ =
     root
         (column
-            []
+            [ padding 20, spacing 20 ]
             [ -- ***** V1 *****
               -- A translation is implemented by the coder via a random generated key
               -- The copy team can then add the translations as an overlay
@@ -124,6 +136,16 @@ view _ =
             -- Additionally, text that is semantically the same does not get to translated
             -- multiple times
             , buttonWith (transV2 "Logout") NoOp
+
+            -- Simple string interpolation
+            -- To work with userdata inside a translation, let's just use simple templating engine
+            , paragraph []
+                [ transInterpolated
+                    "Hi {{username}}, welcome to our translations showcase. {{should-fail}}"
+                    --    ^- This is arbitrary since at the moment the order of strings supplied
+                    --       to our translation component is used to replace each template placeholder
+                    [ "Alice" ]
+                ]
             ]
         )
 

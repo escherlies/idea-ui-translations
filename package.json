@@ -11,10 +11,12 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "elm": "^0.19.1-5"
+    "elm": "^0.19.1-5",
+    "ramda": "^0.28.0"
   },
   "devDependencies": {
     "@parcel/transformer-elm": "^2.7.0",
+    "@types/ramda": "^0.28.21",
     "@typescript-eslint/eslint-plugin": "^5.42.1",
     "@typescript-eslint/parser": "^5.42.1",
     "elm-format": "^0.8.5",

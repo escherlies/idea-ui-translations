@@ -141,7 +141,7 @@ view _ =
             -- To work with userdata inside a translation, let's just use simple templating engine
             , paragraph []
                 [ transInterpolated
-                    "Hi {{username}}, welcome to our translations showcase. {{should-fail}}"
+                    "Hi {{username}}, welcome to our translations showcase."
                     --    ^- This is arbitrary since at the moment the order of strings supplied
                     --       to our translation component is used to replace each template placeholder
                     [ "Alice" ]

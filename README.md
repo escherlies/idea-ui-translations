@@ -27,40 +27,118 @@ trans key =
             []
         )
 
+
+transV2 : String -> Element msg
+transV2 description =
+    html
+        (Html.node "x-trans-v2"
+            [ Html.Attributes.attribute "trans-desc" description
+            ]
+            []
+        )
+
+
 view : Model -> Html Msg
 view _ =
     root
         (column
             []
-            [
-            -- A translation is implemented by the coder via a random generated key
-            -- The copy team can then add the translations as an overlay 
-               buttonWith (trans "HTuFzfsQpom58JYmLZeWo") NoOp
+            [ -- ***** V1 *****
+              -- A translation is implemented by the coder via a random generated key
+              -- The copy team can then add the translations as an overlay
+              buttonWith (trans "HTuFzfsQpom58JYmLZeWo") NoOp
+
             -- We could generate this key with a simple editor-plug-in
             , buttonWith (trans "Mlvc0CGpoEUsVSNml20dA") NoOp
+
+            -- ***** V2 *****
+            -- Instead a random key, we could use a "semantic key".
+            -- This should help the developer, as this is way more declarative
+            -- Now we also have a nice default value for when there is no translation presend
+            -- Additionally, text that is semantically the same does not get to translated
+            -- multiple times
+            , buttonWith (transV2 "Logout") NoOp
             ]
         )
 ```
 
 ## Trans module
 
+### V1
+
 The translations web-component (again, could be anything!) just handles some keys passed down.
 
 ```ts
+
 const trans = new Map()
 
 trans.set("HTuFzfsQpom58JYmLZeWo", "Hello, World!")
 trans.set("Mlvc0CGpoEUsVSNml20dA", "Very, nice!")
 
-
 class Trans extends HTMLElement {
+  shadowDOM: ShadowRoot
+
   constructor() {
     super()
-    this.innerText = trans.get(this.getAttribute("trans-key"))
+    this.shadowDOM = this.attachShadow({ mode: "open" })
+  }
+
+  connectedCallback() {
+    this.setContent(trans.get(this.getAttribute("trans-key")))
+  }
+
+  setContent(content: string) {
+    this.shadowDOM.textContent = content
   }
 }
 
 customElements.define("x-trans", Trans)
+```
+
+### V2
+
+The next iteration handles a more semantic key.
+This key is hashed and used as default value if no translation is present.
+
+```ts
+const trans = new Map<string, string>()
+
+class TransV2 extends HTMLElement {
+  shadowDOM: ShadowRoot
+
+  constructor() {
+    super()
+    this.shadowDOM = this.attachShadow({ mode: "open" })
+  }
+
+  connectedCallback() {
+    const a = this.getAttribute("trans-desc")
+    if (!a) {
+      this.setContent("Missing trans-desc attribute.")
+      return
+    }
+
+    const t = trans.get(hash(a))
+    if (t) {
+      this.setContent(t)
+    } else {
+      trans.set(hash(a), a)
+      this.setContent(a)
+    }
+  }
+
+  setContent(content: string) {
+    this.shadowDOM.textContent = content
+  }
+}
+
+customElements.define("x-trans-v2", TransV2)
+
+
+function hash(a: string): string {
+  // TODO: implementation + check necessity
+  return a
+}
 ```
 
 ## Edit mode
